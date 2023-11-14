@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Profile } from './profile.entity';
-import { Post } from 'src/posts/entities/post.entity';
+import { Post } from '../../posts/entities/post.entity';
 import { IsEmail, IsEnum } from 'class-validator';
 import { $Enums } from '@prisma/client';
 
