@@ -1,10 +1,11 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { $Enums } from '@prisma/client';
-import { IsEmail, IsEnum, IsString, Length } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
 
 @InputType()
 export class CreateUserInput {
   @Field(() => String)
+  @IsNotEmpty()
   @IsEmail()
   @Length(6, 60)
   email: string;
@@ -15,6 +16,7 @@ export class CreateUserInput {
   name: string;
 
   @Field(() => String)
+  @IsNotEmpty()
   @IsString()
   @Length(6, 60)
   password: string;
