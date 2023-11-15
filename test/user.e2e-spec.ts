@@ -1,0 +1,140 @@
+import * as request from 'supertest';
+import { Test, TestingModule } from '@nestjs/testing';
+import { HttpStatus, INestApplication } from '@nestjs/common';
+import { AppModule } from './../src/app.module';
+import { UsersService } from './../src/users/users.service';
+
+describe('UsersResolver (e2e)', () => {
+  let app: INestApplication;
+  const usersService = {
+    create: () => mockUser,
+    findAll: () => [mockUser, mockUser],
+    findOne: () => mockUser,
+    update: () => mockUser,
+    remove: () => mockUser,
+  };
+
+  const mockUser = {
+    id: 1,
+    name: 'Alice',
+    email: 'alice@prisma.io',
+    role: 'USER',
+  };
+
+  beforeAll(async () => {
+    const moduleRef: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    })
+      .overrideProvider(UsersService)
+      .useValue(usersService)
+      .compile();
+
+    app = moduleRef.createNestApplication();
+    await app.init();
+  });
+
+  it('createUser', async () => {
+    return await request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+          mutation {
+            createUser(createUserInput: {
+              email: "andrew@prisma.io"
+              name: "Andrew"
+              password: "whoami"
+              role: "ADMIN"
+            }) {
+              id
+              name
+              email
+              role
+            }
+          }
+        `,
+      })
+      .expect(HttpStatus.OK)
+      .expect({ data: { createUser: usersService.create() } });
+  });
+
+  it('findAll', async () => {
+    return await request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+          query {
+            users(skip:0, take:2) {
+              id
+              name
+              email
+              role
+            }
+          }
+        `,
+      })
+      .expect(HttpStatus.OK)
+      .expect({ data: { users: usersService.findAll() } });
+  });
+
+  it('findOne', async () => {
+    return await request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+          query {
+            user(id: 1) {
+              id
+              name
+              email
+              role
+            }
+          }
+        `,
+      })
+      .expect(HttpStatus.OK)
+      .expect({ data: { user: usersService.findOne() } });
+  });
+
+  it('updateUser', async () => {
+    return await request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+          mutation {
+            updateUser(id: 4, 
+            updateUserInput: { name: "Andy", role: "USER" }) {
+              id
+              name
+              email
+              role
+            }
+          }
+        `,
+      })
+      .expect(HttpStatus.OK)
+      .expect({ data: { updateUser: usersService.update() } });
+  });
+
+  it('removeUser', async () => {
+    return await request(app.getHttpServer())
+      .post('/graphql')
+      .send({
+        query: `
+          mutation {
+            removeUser(id: 4) {
+              id
+              name
+              email
+              role
+            }
+          }
+        `,
+      })
+      .expect(HttpStatus.OK)
+      .expect({ data: { removeUser: usersService.remove() } });
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+});
