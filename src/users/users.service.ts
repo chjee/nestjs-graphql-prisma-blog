@@ -43,21 +43,6 @@ export class UsersService {
     return user;
   }
 
-  async findUser(name: string): Promise<User> {
-    const user = await this.prisma.user.findFirst({
-      include: {
-        profile: true,
-      },
-      where: { name: name },
-    });
-
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-
-    return user;
-  }
-
   async update(params: {
     where: Prisma.UserWhereUniqueInput;
     data: Prisma.UserUpdateInput;
