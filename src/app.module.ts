@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { UsersModule } from './users/users.module';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -19,7 +21,11 @@ import { UsersModule } from './users/users.module';
     }),
     PostsModule,
     UsersModule,
+    AuthModule,
   ],
-  providers: [],
+  providers: [
+    { provide: 'APP_GUARD', useExisting: JwtAuthGuard },
+    JwtAuthGuard,
+  ],
 })
 export class AppModule {}
