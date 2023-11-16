@@ -2,7 +2,8 @@ import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { AppModule } from './../src/app.module';
-import { PostsService } from '../src/posts/posts.service';
+import { JwtAuthGuard } from './../src/auth/jwt-auth.guard';
+import { PostsService } from './../src/posts/posts.service';
 
 describe('PostsResolver (e2e)', () => {
   let app: INestApplication;
@@ -25,6 +26,8 @@ describe('PostsResolver (e2e)', () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
+      .overrideProvider(JwtAuthGuard)
+      .useValue({ canActivate: () => true })
       .overrideProvider(PostsService)
       .useValue(postsService)
       .compile();
