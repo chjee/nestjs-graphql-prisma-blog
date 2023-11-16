@@ -3,15 +3,15 @@ import { User } from './user.entity';
 
 @ObjectType()
 export class Profile {
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Profile ID' })
   id: number;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'User Status' })
   bio: string;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'User ID' })
   userId: string;
 
-  @Field(() => User)
+  @Field(() => User, { description: 'User Object' })
   user: User;
 }
