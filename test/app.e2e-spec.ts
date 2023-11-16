@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { JwtAuthGuard } from './../src/auth/jwt-auth.guard';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -20,10 +21,13 @@ describe('AppController (e2e)', () => {
     userId: 1,
   };
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(JwtAuthGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(
@@ -35,6 +39,26 @@ describe('AppController (e2e)', () => {
     );
     app.enableShutdownHooks();
     await app.init();
+  });
+
+  describe('LogIn User', () => {
+    it('POST 200', () => {
+      return request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+            mutation {
+              login(signInInput: {
+                email: "alice@prisma.io"
+                password: "whoami"
+              }) {
+                token
+              }
+            }
+          `,
+        })
+        .expect(HttpStatus.OK);
+    });
   });
 
   describe('UsersResolver (e2e)', () => {
@@ -60,7 +84,8 @@ describe('AppController (e2e)', () => {
         })
         .expect(HttpStatus.OK)
         .expect((res) => {
-          mockUser.id = res.body.id;
+          console.log(res.body);
+          mockUser.id = res.body.data.createUser.id;
         });
     });
 
@@ -161,7 +186,7 @@ describe('AppController (e2e)', () => {
         })
         .expect(HttpStatus.OK)
         .expect((res) => {
-          mockPost.id = res.body.id;
+          mockPost.id = res.body.data.createPost.id;
         });
     });
 
