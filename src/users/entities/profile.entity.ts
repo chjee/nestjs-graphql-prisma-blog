@@ -6,7 +6,7 @@ export class Profile {
   @Field(() => Int, { description: 'Profile ID' })
   id: number;
 
-  @Field(() => String, { description: 'User Status' })
+  @Field(() => String, { description: 'User Bio' })
   bio: string;
 
   @Field(() => String, { description: 'User ID' })
