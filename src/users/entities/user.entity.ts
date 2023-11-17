@@ -2,7 +2,6 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Profile } from './profile.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
-import { $Enums } from '@prisma/client';
 
 @ObjectType()
 export class User {
@@ -10,10 +9,10 @@ export class User {
   @IsNotEmpty()
   id: number;
 
-  @Field(() => Date, { description: 'created Date' })
+  @Field(() => Date, { description: 'Created Date' })
   createdAt: Date;
 
-  @Field(() => String, { description: 'email' })
+  @Field(() => String, { description: 'User Email' })
   @IsNotEmpty()
   @IsEmail()
   @Length(6, 60)
@@ -22,7 +21,7 @@ export class User {
   @Field(() => String, { nullable: true, description: 'User Name' })
   name: string;
 
-  @Field(() => String, { description: 'password' })
+  @Field(() => String, { description: 'Password' })
   @IsNotEmpty()
   @IsString()
   @Length(6, 60)
@@ -32,7 +31,7 @@ export class User {
   @IsNotEmpty()
   @IsString()
   @IsEnum(['ADMIN', 'USER'])
-  role: $Enums.Role;
+  role: string;
 
   @Field(() => [Post], { nullable: true, description: 'User Posts' })
   posts?: [Post] | null;
