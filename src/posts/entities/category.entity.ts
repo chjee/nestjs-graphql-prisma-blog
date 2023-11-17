@@ -3,12 +3,12 @@ import { Post } from './post.entity';
 
 @ObjectType()
 export class Category {
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Category ID' })
   id: number;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'Category Name' })
   name: string;
 
-  @Field(() => [Post], { nullable: true })
+  @Field(() => [Post], { nullable: true, description: 'Category Posts' })
   posts?: [Post] | null;
 }

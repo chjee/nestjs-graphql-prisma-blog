@@ -4,27 +4,27 @@ import { Category } from './category.entity';
 
 @ObjectType()
 export class Post {
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Post ID' })
   id: number;
 
-  @Field(() => Date)
+  @Field(() => Date, { description: 'Created Date' })
   createdAt: Date;
 
-  @Field(() => Date)
+  @Field(() => Date, { description: 'Updated Date' })
   updatedAt: Date;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'Post Title' })
   title: string;
 
-  @Field(() => Boolean, { defaultValue: false })
+  @Field(() => Boolean, { defaultValue: false, description: 'Post Published' })
   published: boolean;
 
-  @Field(() => Int)
+  @Field(() => Int, { description: 'User ID' })
   userId: number;
 
-  @Field(() => User, { nullable: true })
+  @Field(() => User, { nullable: true, description: 'User Object' })
   user?: User | null;
 
-  @Field(() => [Category], { nullable: true })
+  @Field(() => [Category], { nullable: true, description: 'Post Categories' })
   categories?: [Category] | null;
 }
