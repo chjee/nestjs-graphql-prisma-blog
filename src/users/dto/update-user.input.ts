@@ -1,5 +1,8 @@
+import { InputType, PickType } from '@nestjs/graphql';
 import { CreateUserInput } from './create-user.input';
-import { InputType, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdateUserInput extends PartialType(CreateUserInput) {}
+export class UpdateUserInput extends PickType(CreateUserInput, [
+  'name',
+  'role',
+] as const) {}

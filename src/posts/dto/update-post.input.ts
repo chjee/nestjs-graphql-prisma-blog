@@ -1,5 +1,8 @@
+import { InputType, PickType } from '@nestjs/graphql';
 import { CreatePostInput } from './create-post.input';
-import { InputType, PartialType } from '@nestjs/graphql';
 
 @InputType()
-export class UpdatePostInput extends PartialType(CreatePostInput) {}
+export class UpdatePostInput extends PickType(CreatePostInput, [
+  'title',
+  'published',
+] as const) {}
