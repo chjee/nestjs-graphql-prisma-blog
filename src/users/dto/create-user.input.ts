@@ -13,7 +13,7 @@ export class CreateUserInput {
   @Field(() => String, { nullable: true })
   @IsString()
   @Length(4, 60)
-  name: string;
+  name?: string;
 
   @Field(() => String)
   @IsNotEmpty()

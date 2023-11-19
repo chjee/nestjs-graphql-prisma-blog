@@ -19,7 +19,7 @@ export class User {
   email: string;
 
   @Field(() => String, { nullable: true, description: 'User Name' })
-  name: string;
+  name?: string;
 
   @Field(() => String, { description: 'Password' })
   @IsNotEmpty()
