@@ -2,7 +2,7 @@ import { InputType, Field, PickType, ObjectType } from '@nestjs/graphql';
 import { User } from '../entities/user.entity';
 import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 
-@InputType()
+@InputType({ description: 'Sign In Input' })
 export class SignInInput extends PickType(User, [
   'email',
   'password',
@@ -20,7 +20,7 @@ export class SignInInput extends PickType(User, [
   password: string;
 }
 
-@ObjectType()
+@ObjectType({ description: 'Sign In Output' })
 export class SignInOutput {
   @Field(() => String, { nullable: true, description: 'JWT Token' })
   token?: string;

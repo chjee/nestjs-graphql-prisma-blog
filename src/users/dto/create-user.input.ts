@@ -2,7 +2,7 @@ import { InputType, Field } from '@nestjs/graphql';
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
 import { $Enums } from '@prisma/client';
 
-@InputType()
+@InputType({ description: 'Create User Input' })
 export class CreateUserInput {
   @Field(() => String)
   @IsNotEmpty()

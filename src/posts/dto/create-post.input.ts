@@ -7,7 +7,7 @@ import {
   Length,
 } from 'class-validator';
 
-@InputType()
+@InputType({ description: 'Create Post Input' })
 export class CreatePostInput {
   @Field(() => String)
   @IsNotEmpty()

@@ -3,7 +3,7 @@ import { Profile } from './profile.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
 
-@ObjectType()
+@ObjectType({ description: 'User Model' })
 export class User {
   @Field(() => Int, { description: 'User ID' })
   @IsNotEmpty()
