@@ -5,6 +5,8 @@ import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { PostsService } from '../posts/posts.service';
+import { ProfilesService } from '../profiles/profiles.service';
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver;
@@ -32,7 +34,13 @@ describe('UsersResolver', () => {
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      providers: [PrismaService, UsersResolver, UsersService],
+      providers: [
+        PrismaService,
+        UsersResolver,
+        UsersService,
+        PostsService,
+        ProfilesService,
+      ],
     }).compile();
 
     resolver = moduleRef.get<UsersResolver>(UsersResolver);
