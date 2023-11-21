@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Profile } from './profile.entity';
+import { Profile } from '../../profiles/entities/profile.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
 
