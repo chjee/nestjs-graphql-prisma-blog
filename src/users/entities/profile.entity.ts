@@ -1,9 +1,9 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from './user.entity';
 
 @ObjectType({ description: 'Profile Model' })
 export class Profile {
-  @Field(() => Int, { description: 'Profile ID' })
+  @Field(() => ID, { description: 'Profile ID' })
   id: number;
 
   @Field(() => String, { description: 'User Bio' })

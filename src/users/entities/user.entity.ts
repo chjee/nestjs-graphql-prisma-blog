@@ -1,11 +1,11 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Profile } from './profile.entity';
 import { Post } from '../../posts/entities/post.entity';
 import { IsEmail, IsEnum, IsNotEmpty, IsString, Length } from 'class-validator';
 
 @ObjectType({ description: 'User Model' })
 export class User {
-  @Field(() => Int, { description: 'User ID' })
+  @Field(() => ID, { description: 'User ID' })
   @IsNotEmpty()
   id: number;
 
