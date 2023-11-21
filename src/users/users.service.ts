@@ -29,10 +29,6 @@ export class UsersService {
 
   async findOne(where: Prisma.UserWhereUniqueInput): Promise<User> {
     const user = await this.prisma.user.findUnique({
-      include: {
-        posts: true,
-        profile: true,
-      },
       where,
     });
 
