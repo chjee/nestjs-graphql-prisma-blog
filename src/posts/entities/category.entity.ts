@@ -1,9 +1,9 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Post } from './post.entity';
 
 @ObjectType({ description: 'Category Model' })
 export class Category {
-  @Field(() => ID, { description: 'Category ID' })
+  @Field(() => Int, { description: 'Category ID' })
   id: number;
 
   @Field(() => String, { description: 'Category Name' })

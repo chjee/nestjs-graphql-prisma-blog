@@ -1,10 +1,10 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { User } from '../../users/entities/user.entity';
 import { Category } from './category.entity';
 
 @ObjectType({ description: 'Post Model' })
 export class Post {
-  @Field(() => ID, { description: 'Post ID' })
+  @Field(() => Int, { description: 'Post ID' })
   id: number;
 
   @Field(() => Date, { description: 'Created Date' })
