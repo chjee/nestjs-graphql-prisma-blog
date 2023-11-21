@@ -1,9 +1,9 @@
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import { AppModule } from './../src/app.module';
-import { JwtAuthGuard } from './../src/auth/jwt-auth.guard';
-import { PostsService } from './../src/posts/posts.service';
+import { AppModule } from '../src/app.module';
+import { JwtAuthGuard } from '../src/auth/jwt-auth.guard';
+import { PostsService } from '../src/posts/posts.service';
 
 describe('PostsResolver (e2e)', () => {
   let app: INestApplication;
