@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { UsersModule } from './users/users.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { ProfilesModule } from './profiles/profiles.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     PostsModule,
     UsersModule,
     AuthModule,
+    ProfilesModule,
   ],
   providers: [
     { provide: 'APP_GUARD', useExisting: JwtAuthGuard },
