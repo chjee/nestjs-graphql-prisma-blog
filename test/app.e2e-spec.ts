@@ -21,6 +21,12 @@ describe('AppController (e2e)', () => {
     userId: 1,
   };
 
+  const mockProfile = {
+    id: 1,
+    bio: 'Happy',
+    userId: 1,
+  };
+
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
@@ -259,6 +265,100 @@ describe('AppController (e2e)', () => {
                 id
                 title
                 published
+                userId
+              }
+            }
+          `,
+        })
+        .expect(HttpStatus.OK);
+    });
+  });
+
+  describe('ProfilesResolver (e2e)', () => {
+    it('createProfile', async () => {
+      return await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+            mutation {
+              createProfile(createProfileInput: {
+                bio: "Happy"
+                userId: 1
+              }) {
+                id
+                bio
+                userId
+              }
+            }
+          `,
+        })
+        .expect(HttpStatus.OK)
+        .expect((res) => {
+          mockProfile.id = res.body.data.createProfile.id;
+        });
+    });
+
+    it('findAll', async () => {
+      return await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+            query {
+              profiles(skip:0, take:2) {
+                id
+                bio
+                userId
+              }
+            }
+          `,
+        })
+        .expect(HttpStatus.OK);
+    });
+
+    it('findOne', async () => {
+      return await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+            query {
+              profile(id: ${mockProfile.id}) {
+                id
+                bio
+                userId
+              }
+            }
+          `,
+        })
+        .expect(HttpStatus.OK);
+    });
+
+    it('updatePost', async () => {
+      return await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+            mutation {
+              updateProfile(id: ${mockProfile.id}, 
+              updateProfileInput: { bio: "Soso" }) {
+                id
+                bio
+                userId
+              }
+            }
+          `,
+        })
+        .expect(HttpStatus.OK);
+    });
+
+    it('removePost', async () => {
+      return await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+            mutation {
+              removeProfile(id: ${mockProfile.id}) {
+                id
+                bio
                 userId
               }
             }
