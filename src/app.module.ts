@@ -7,6 +7,7 @@ import { PostsModule } from './posts/posts.module';
 import { UsersModule } from './users/users.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ProfilesModule } from './profiles/profiles.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ProfilesModule } from './profiles/profiles.module';
     UsersModule,
     AuthModule,
     ProfilesModule,
+    PrismaModule,
   ],
   providers: [
     { provide: 'APP_GUARD', useExisting: JwtAuthGuard },
