@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Profile } from '@prisma/client';
 
@@ -33,7 +33,7 @@ export class ProfilesService {
     });
 
     if (!profile) {
-      throw new HttpException('Profile not found', HttpStatus.NOT_FOUND);
+      throw new NotFoundException();
     }
 
     return profile;
