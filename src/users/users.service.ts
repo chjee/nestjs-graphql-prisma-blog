@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger(UsersService.name);
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.create({ data });
@@ -33,6 +34,7 @@ export class UsersService {
     });
 
     if (!user) {
+      this.logger.error(`User with id ${where.id} not found`);
       throw new NotFoundException();
     }
 
@@ -48,6 +50,7 @@ export class UsersService {
     });
 
     if (!user) {
+      this.logger.error(`User with id ${where.id} not found`);
       throw new NotFoundException();
     }
 

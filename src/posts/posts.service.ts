@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 // import { CreatePostInput } from './dto/create-post.input';
 // import { UpdatePostInput } from './dto/update-post.input';
 import { PrismaService } from '../prisma/prisma.service';
@@ -7,6 +7,8 @@ import { Post, Prisma } from '@prisma/client';
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger(PostsService.name);
+
   async create(data: Prisma.PostCreateInput): Promise<Post> {
     return this.prisma.post.create({ data });
   }
@@ -42,6 +44,7 @@ export class PostsService {
     });
 
     if (!post) {
+      this.logger.error(`Post with id ${where.id} not found`);
       throw new NotFoundException();
     }
 
