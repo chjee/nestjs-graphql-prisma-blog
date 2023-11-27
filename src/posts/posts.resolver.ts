@@ -15,7 +15,7 @@ export class PostsResolver {
     return this.postsService.create(createPostInput);
   }
 
-  @Query(() => [Post], { name: 'posts' })
+  @Query(() => [Post], { name: 'getPosts' })
   async findAll(
     @Args('skip', { type: () => Int, nullable: true }) skip?: number,
     @Args('take', { type: () => Int, nullable: true }) take?: number,
@@ -26,7 +26,7 @@ export class PostsResolver {
     });
   }
 
-  @Query(() => Post, { name: 'post' })
+  @Query(() => Post, { name: 'getPostById' })
   async findOne(@Args('id', { type: () => Int }) id: number): Promise<Post> {
     return this.postsService.findOne({ id });
   }

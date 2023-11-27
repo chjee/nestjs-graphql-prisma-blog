@@ -15,7 +15,7 @@ export class ProfilesResolver {
     return this.profilesService.create(createProfileInput);
   }
 
-  @Query(() => [Profile], { name: 'profiles' })
+  @Query(() => [Profile], { name: 'getProfiles' })
   async findAll(
     @Args('skip', { type: () => Int, nullable: true }) skip?: number,
     @Args('take', { type: () => Int, nullable: true }) take?: number,
@@ -26,7 +26,7 @@ export class ProfilesResolver {
     });
   }
 
-  @Query(() => Profile, { name: 'profile' })
+  @Query(() => Profile, { name: 'getProfileById' })
   async findOne(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
     return this.profilesService.findOne({ id });
   }

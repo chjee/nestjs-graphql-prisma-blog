@@ -29,7 +29,7 @@ export class UsersResolver {
     return this.usersService.create(createUserInput);
   }
 
-  @Query(() => [User], { name: 'users' })
+  @Query(() => [User], { name: 'getUsers' })
   async findAll(
     @Args('skip', { type: () => Int, nullable: true }) skip?: number,
     @Args('take', { type: () => Int, nullable: true }) take?: number,
@@ -40,7 +40,7 @@ export class UsersResolver {
     });
   }
 
-  @Query(() => User, { name: 'user' })
+  @Query(() => User, { name: 'getUserById' })
   async findOne(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.findOne({ id });
   }
