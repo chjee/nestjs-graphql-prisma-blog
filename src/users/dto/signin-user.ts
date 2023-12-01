@@ -7,13 +7,13 @@ export class SignInInput extends PickType(User, [
   'email',
   'password',
 ] as const) {
-  @Field(() => String)
+  @Field(() => String, { description: 'User Email' })
   @IsNotEmpty()
   @IsEmail()
   @Length(6, 60)
   email: string;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'Password' })
   @IsNotEmpty()
   @IsString()
   @Length(6, 60)

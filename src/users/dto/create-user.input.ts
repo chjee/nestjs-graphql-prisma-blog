@@ -4,24 +4,24 @@ import { $Enums } from '@prisma/client';
 
 @InputType({ description: 'Create User Input' })
 export class CreateUserInput {
-  @Field(() => String)
+  @Field(() => String, { description: 'User Email' })
   @IsNotEmpty()
   @IsEmail()
   @Length(6, 60)
   email: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: true, description: 'User Name' })
   @IsString()
   @Length(4, 60)
   name?: string;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'Password' })
   @IsNotEmpty()
   @IsString()
   @Length(6, 60)
   password: string;
 
-  @Field(() => String)
+  @Field(() => String, { description: 'User Role' })
   @IsEnum(['ADMIN', 'USER'])
   role: $Enums.Role;
 }
