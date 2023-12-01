@@ -2,33 +2,16 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PostsResolver } from './posts.resolver';
 import { PostsService } from './posts.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { Post } from './entities/post.entity';
-import { CreatePostInput } from './dto/create-post.input';
-import { UpdatePostInput } from './dto/update-post.input';
+import {
+  post,
+  posts,
+  createPostInput,
+  updatePostInput,
+} from '../common/constants/jest.constants';
 
 describe('PostsResolver', () => {
   let resolver: PostsResolver;
   let service: PostsService;
-
-  const post: Post = {
-    id: 1,
-    title: 'Test Post',
-    published: false,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    userId: 1,
-  };
-
-  const posts: Post[] = [
-    {
-      id: 1,
-      title: 'Test Post',
-      published: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      userId: 1,
-    },
-  ];
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
@@ -41,17 +24,6 @@ describe('PostsResolver', () => {
 
   describe('create', () => {
     it('should return a post', async () => {
-      const createPostInput: CreatePostInput = {
-        title: 'Just 10 minutes.',
-        published: false,
-        userId: 1,
-        user: {
-          connect: {
-            id: 1,
-          },
-        },
-      };
-
       jest.spyOn(service, 'create').mockImplementation(async () => post);
       expect(await resolver.createPost(createPostInput)).toBe(post);
     });
@@ -73,11 +45,6 @@ describe('PostsResolver', () => {
 
   describe('update', () => {
     it('should return a post', async () => {
-      const updatePostInput: UpdatePostInput = {
-        title: 'Just 10 minutes.',
-        published: true,
-      };
-
       jest.spyOn(service, 'update').mockImplementation(async () => post);
       expect(await resolver.updatePost(1, updatePostInput)).toBe(post);
     });
