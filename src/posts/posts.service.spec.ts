@@ -9,50 +9,50 @@ import {
 } from '../common/constants/jest.constants';
 
 describe('PostsService', () => {
-  let service: PostsService;
+  let postsService: PostsService;
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [PrismaService, PostsService],
     }).compile();
 
-    service = moduleRef.get<PostsService>(PostsService);
+    postsService = moduleRef.get<PostsService>(PostsService);
   });
 
   describe('create', () => {
     it('should return a post', async () => {
-      jest.spyOn(service, 'create').mockImplementation(async () => post);
-      expect(await service.create(createPostInput)).toBe(post);
+      jest.spyOn(postsService, 'create').mockImplementation(async () => post);
+      expect(await postsService.create(createPostInput)).toBe(post);
     });
   });
 
   describe('findAll', () => {
     it('should return an array of posts', async () => {
-      jest.spyOn(service, 'findAll').mockImplementation(async () => posts);
-      expect(await service.findAll({ skip: 0, take: 3 })).toBe(posts);
+      jest.spyOn(postsService, 'findAll').mockImplementation(async () => posts);
+      expect(await postsService.findAll({ skip: 0, take: 3 })).toBe(posts);
     });
   });
 
   describe('findOne', () => {
     it('should return a post', async () => {
-      jest.spyOn(service, 'findOne').mockImplementation(async () => post);
-      expect(await service.findOne({ id: 1 })).toBe(post);
+      jest.spyOn(postsService, 'findOne').mockImplementation(async () => post);
+      expect(await postsService.findOne({ id: 1 })).toBe(post);
     });
   });
 
   describe('update', () => {
     it('should return a post', async () => {
-      jest.spyOn(service, 'update').mockImplementation(async () => post);
+      jest.spyOn(postsService, 'update').mockImplementation(async () => post);
       expect(
-        await service.update({ where: { id: 1 }, data: updatePostInput }),
+        await postsService.update({ where: { id: 1 }, data: updatePostInput }),
       ).toBe(post);
     });
   });
 
   describe('remove', () => {
     it('should return a post', async () => {
-      jest.spyOn(service, 'remove').mockImplementation(async () => post);
-      expect(await service.remove({ id: 1 })).toBe(post);
+      jest.spyOn(postsService, 'remove').mockImplementation(async () => post);
+      expect(await postsService.remove({ id: 1 })).toBe(post);
     });
   });
 });

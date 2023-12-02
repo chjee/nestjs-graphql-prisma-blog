@@ -9,50 +9,50 @@ import {
 } from '../common/constants/jest.constants';
 
 describe('UsersService', () => {
-  let service: UsersService;
+  let usersService: UsersService;
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [PrismaService, UsersService],
     }).compile();
 
-    service = moduleRef.get<UsersService>(UsersService);
+    usersService = moduleRef.get<UsersService>(UsersService);
   });
 
   describe('create', () => {
     it('should return a user', async () => {
-      jest.spyOn(service, 'create').mockImplementation(async () => user);
-      expect(await service.create(createUserInput)).toBe(user);
+      jest.spyOn(usersService, 'create').mockImplementation(async () => user);
+      expect(await usersService.create(createUserInput)).toBe(user);
     });
   });
 
   describe('findAll', () => {
     it('should return an array of users', async () => {
-      jest.spyOn(service, 'findAll').mockImplementation(async () => users);
-      expect(await service.findAll({ skip: 0, take: 3 })).toBe(users);
+      jest.spyOn(usersService, 'findAll').mockImplementation(async () => users);
+      expect(await usersService.findAll({ skip: 0, take: 3 })).toBe(users);
     });
   });
 
   describe('findOne', () => {
     it('should return a user', async () => {
-      jest.spyOn(service, 'findOne').mockImplementation(async () => user);
-      expect(await service.findOne({ id: 1 })).toBe(user);
+      jest.spyOn(usersService, 'findOne').mockImplementation(async () => user);
+      expect(await usersService.findOne({ id: 1 })).toBe(user);
     });
   });
 
   describe('update', () => {
     it('should return a user', async () => {
-      jest.spyOn(service, 'update').mockImplementation(async () => user);
+      jest.spyOn(usersService, 'update').mockImplementation(async () => user);
       expect(
-        await service.update({ where: { id: 1 }, data: updateUserInput }),
+        await usersService.update({ where: { id: 1 }, data: updateUserInput }),
       ).toBe(user);
     });
   });
 
   describe('remove', () => {
     it('should return a user', async () => {
-      jest.spyOn(service, 'remove').mockImplementation(async () => user);
-      expect(await service.remove({ id: 1 })).toBe(user);
+      jest.spyOn(usersService, 'remove').mockImplementation(async () => user);
+      expect(await usersService.remove({ id: 1 })).toBe(user);
     });
   });
 });
