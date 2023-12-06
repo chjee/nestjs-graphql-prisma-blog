@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, GraphQLTimestamp } from '@nestjs/graphql';
 import { Profile } from '../../profiles/entities/profile.entity';
 import { Post } from '../../posts/entities/post.entity';
 
@@ -7,7 +7,7 @@ export class User {
   @Field(() => Int, { description: 'User ID' })
   id: number;
 
-  @Field(() => Date, { description: 'Created Date' })
+  @Field(() => GraphQLTimestamp, { description: 'Created Date' })
   createdAt: Date;
 
   @Field(() => String, { description: 'User Email' })
