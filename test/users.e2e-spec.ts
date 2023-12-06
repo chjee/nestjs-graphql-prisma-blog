@@ -47,7 +47,8 @@ describe('UsersResolver (e2e)', () => {
               name: "Andrew"
               password: "whoami"
               role: "ADMIN"
-            }) {
+            })
+            {
               id
               name
               email
@@ -66,7 +67,8 @@ describe('UsersResolver (e2e)', () => {
       .send({
         query: `
           query {
-            users(skip:0, take:2) {
+            getUsers(skip:0, take:2)
+            {
               id
               name
               email
@@ -76,7 +78,7 @@ describe('UsersResolver (e2e)', () => {
         `,
       })
       .expect(HttpStatus.OK)
-      .expect({ data: { users: usersService.findAll() } });
+      .expect({ data: { getUsers: usersService.findAll() } });
   });
 
   it('findOne', async () => {
@@ -85,7 +87,8 @@ describe('UsersResolver (e2e)', () => {
       .send({
         query: `
           query {
-            user(id: 1) {
+            getUserById(id: 1)
+            {
               id
               name
               email
@@ -95,7 +98,7 @@ describe('UsersResolver (e2e)', () => {
         `,
       })
       .expect(HttpStatus.OK)
-      .expect({ data: { user: usersService.findOne() } });
+      .expect({ data: { getUserById: usersService.findOne() } });
   });
 
   it('updateUser', async () => {
@@ -105,7 +108,11 @@ describe('UsersResolver (e2e)', () => {
         query: `
           mutation {
             updateUser(id: 4, 
-            updateUserInput: { name: "Andy", role: "USER" }) {
+            updateUserInput: {
+              name: "Andy",
+              role: "USER"
+            })
+            {
               id
               name
               email
@@ -124,7 +131,8 @@ describe('UsersResolver (e2e)', () => {
       .send({
         query: `
           mutation {
-            removeUser(id: 4) {
+            removeUser(id: 4)
+            {
               id
               name
               email
