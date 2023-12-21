@@ -1,6 +1,4 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-// import { CreatePostInput } from './dto/create-post.input';
-// import { UpdatePostInput } from './dto/update-post.input';
 import { PrismaService } from '../prisma/prisma.service';
 import { Post, Prisma } from '@prisma/client';
 
