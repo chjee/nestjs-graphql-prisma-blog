@@ -1,12 +1,28 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { PostsService } from './posts.service';
 import { Post } from './entities/post.entity';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
+import { UsersService } from './../users/users.service';
+import { User } from './../users/entities/user.entity';
+import { CategoriesService } from './../categories/categories.service';
+import { Category } from './../categories/entities/category.entity';
 
 @Resolver(() => Post)
 export class PostsResolver {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(
+    private readonly postsService: PostsService,
+    private readonly usersService: UsersService,
+    private readonly categoriesService: CategoriesService,
+  ) {}
 
   @Mutation(() => Post)
   async createPost(
@@ -29,6 +45,24 @@ export class PostsResolver {
   @Query(() => Post, { name: 'getPostById' })
   async findOne(@Args('id', { type: () => Int }) id: number): Promise<Post> {
     return this.postsService.findOne({ id });
+  }
+
+  @ResolveField()
+  async user(@Parent() { userId }: Post): Promise<User> {
+    return this.usersService.findOne({ id: userId });
+  }
+
+  @ResolveField()
+  async categories(@Parent() { id }: Post): Promise<Category[]> {
+    return this.categoriesService.findAll({
+      where: {
+        posts: {
+          some: {
+            id: id,
+          },
+        },
+      },
+    });
   }
 
   @Mutation(() => Post)
