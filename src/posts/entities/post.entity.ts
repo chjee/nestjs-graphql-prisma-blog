@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int, GraphQLTimestamp } from '@nestjs/graphql';
 import { User } from '../../users/entities/user.entity';
-import { Category } from './category.entity';
+import { Category } from '../../categories/entities/category.entity';
 
 @ObjectType({ description: 'Post Model' })
 export class Post {
