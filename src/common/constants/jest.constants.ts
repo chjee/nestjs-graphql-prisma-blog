@@ -5,6 +5,23 @@ import { CreateProfileInput } from './../../profiles/dto/create-profile.input';
 import { UpdateProfileInput } from './../../profiles/dto/update-profile.input';
 import { CreateUserInput } from './../../users/dto/create-user.input';
 import { UpdateUserInput } from './../../users/dto/update-user.input';
+import { Category } from './../../categories/entities/category.entity';
+import { CreateCategoryInput } from './../../categories/dto/create-category.input';
+import { UpdateCategoryInput } from './../../categories/dto/update-category.input';
+
+export const category: Category = {
+  id: 1,
+  name: 'Database',
+};
+export const categories: Category[] = [category];
+
+export const createCategoryInput: CreateCategoryInput = {
+  name: 'Test Category',
+};
+
+export const updateCategoryInput: UpdateCategoryInput = {
+  name: 'Science',
+};
 
 export const post: Post = {
   id: 1,
