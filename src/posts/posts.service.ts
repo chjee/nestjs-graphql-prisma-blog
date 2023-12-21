@@ -27,19 +27,11 @@ export class PostsService {
       cursor,
       where,
       orderBy,
-      include: {
-        user: true,
-        categories: true,
-      },
     });
   }
 
   async findOne(where: Prisma.PostWhereUniqueInput): Promise<Post> {
     const post = await this.prisma.post.findUnique({
-      include: {
-        user: true,
-        categories: true,
-      },
       where,
     });
 
