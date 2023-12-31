@@ -29,15 +29,9 @@ export class CategoriesService {
   }
 
   async findOne(where: Prisma.CategoryWhereUniqueInput): Promise<Category> {
-    const category = await this.prisma.category.findUnique({
+    return this.prisma.category.findUnique({
       where,
     });
-
-    if (!category) {
-      this.logger.error(`Category with id ${where.id} not found`);
-    }
-
-    return category;
   }
 
   async update(params: {
@@ -45,15 +39,31 @@ export class CategoriesService {
     data: Prisma.CategoryUpdateInput;
   }): Promise<Category> {
     const { where, data } = params;
-    return this.prisma.category.update({
-      data,
-      where,
-    });
+    try {
+      return await this.prisma.category.update({
+        data,
+        where,
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') {
+          this.logger.log(`Category with id ${where.id} not found`);
+        }
+      }
+    }
   }
 
   async remove(where: Prisma.CategoryWhereUniqueInput): Promise<Category> {
-    return this.prisma.category.delete({
-      where,
-    });
+    try {
+      return await this.prisma.category.delete({
+        where,
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') {
+          this.logger.log(`Category with id ${where.id} not found`);
+        }
+      }
+    }
   }
 }

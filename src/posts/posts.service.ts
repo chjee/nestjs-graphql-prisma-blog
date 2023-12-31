@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Post, Prisma } from '@prisma/client';
 
@@ -29,16 +29,9 @@ export class PostsService {
   }
 
   async findOne(where: Prisma.PostWhereUniqueInput): Promise<Post> {
-    const post = await this.prisma.post.findUnique({
+    return this.prisma.post.findUnique({
       where,
     });
-
-    if (!post) {
-      this.logger.error(`Post with id ${where.id} not found`);
-      throw new NotFoundException();
-    }
-
-    return post;
   }
 
   async update(params: {
@@ -46,15 +39,31 @@ export class PostsService {
     data: Prisma.PostUpdateInput;
   }): Promise<Post> {
     const { where, data } = params;
-    return this.prisma.post.update({
-      data,
-      where,
-    });
+    try {
+      return await this.prisma.post.update({
+        data,
+        where,
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') {
+          this.logger.log(`Post with id ${where.id} not found`);
+        }
+      }
+    }
   }
 
   async remove(where: Prisma.PostWhereUniqueInput): Promise<Post> {
-    return this.prisma.post.delete({
-      where,
-    });
+    try {
+      return await this.prisma.post.delete({
+        where,
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') {
+          this.logger.log(`Post with id ${where.id} not found`);
+        }
+      }
+    }
   }
 }
