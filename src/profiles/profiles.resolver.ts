@@ -26,12 +26,12 @@ export class ProfilesResolver {
     });
   }
 
-  @Query(() => Profile, { name: 'getProfileById' })
+  @Query(() => Profile, { nullable: true, name: 'getProfileById' })
   async findOne(@Args('id', { type: () => Int }) id: number): Promise<Profile> {
     return this.profilesService.findOne({ id });
   }
 
-  @Mutation(() => Profile)
+  @Mutation(() => Profile, { nullable: true, name: 'updateProfile' })
   async updateProfile(
     @Args('id', { type: () => Int }) id: number,
     @Args('updateProfileInput') updateProfileInput: UpdateProfileInput,
@@ -39,11 +39,10 @@ export class ProfilesResolver {
     return this.profilesService.update({
       where: { id: id },
       data: updateProfileInput,
-      // data: { ...updateProfileInput }, // , ...updateProfileInput
     });
   }
 
-  @Mutation(() => Profile)
+  @Mutation(() => Profile, { nullable: true, name: 'removeProfile' })
   async removeProfile(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<any> {

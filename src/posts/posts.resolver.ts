@@ -42,7 +42,7 @@ export class PostsResolver {
     });
   }
 
-  @Query(() => Post, { name: 'getPostById' })
+  @Query(() => Post, { nullable: true, name: 'getPostById' })
   async findOne(@Args('id', { type: () => Int }) id: number): Promise<Post> {
     return this.postsService.findOne({ id });
   }
@@ -65,7 +65,7 @@ export class PostsResolver {
     });
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, { nullable: true, name: 'updatePost' })
   async updatePost(
     @Args('id', { type: () => Int }) id: number,
     @Args('updatePostInput') updatePostInput: UpdatePostInput,
@@ -76,7 +76,7 @@ export class PostsResolver {
     });
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, { nullable: true, name: 'removePost' })
   async removePost(@Args('id', { type: () => Int }) id: number): Promise<any> {
     return this.postsService.remove({ id: id });
   }

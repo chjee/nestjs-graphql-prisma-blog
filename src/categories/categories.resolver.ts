@@ -39,7 +39,7 @@ export class CategoriesResolver {
     });
   }
 
-  @Query(() => Category, { name: 'getCategoryById' })
+  @Query(() => Category, { nullable: true, name: 'getCategoryById' })
   async findOne(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<Category> {
@@ -59,18 +59,18 @@ export class CategoriesResolver {
     });
   }
 
-  @Mutation(() => Category)
+  @Mutation(() => Category, { nullable: true, name: 'updateCategory' })
   async updateCategory(
     @Args('id', { type: () => Int }) id: number,
     @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
-  ): Promise<any> {
+  ): Promise<Category> {
     return this.categoriesService.update({
       where: { id: id },
       data: updateCategoryInput,
     });
   }
 
-  @Mutation(() => Category)
+  @Mutation(() => Category, { nullable: true, name: 'removeCategory' })
   async removeCategory(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<any> {
