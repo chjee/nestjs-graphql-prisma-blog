@@ -19,7 +19,7 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   const configService = app.get<ConfigService>(ConfigService);
-  const listenPort = configService.get<number>('PORT', 10000);
+  const listenPort = configService.get<number>('PORT', 3000);
   await app.listen(listenPort);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
